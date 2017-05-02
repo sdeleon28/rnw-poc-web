@@ -26,7 +26,7 @@ Creating a native-ready component is usually a matter of using `View`, `Text`, `
 
 The source for the demo component in this repo is at `src/components/DemoWidget` and looks like this:
 
-```
+```javascript
 import React, { Component, PropTypes as pt } from 'react';
 import {
   StyleSheet,
