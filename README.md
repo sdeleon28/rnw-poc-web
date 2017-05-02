@@ -1,53 +1,93 @@
-![React Native Web](/app/assets/react-native-web.png "Logo React Native Web")
+# rnw-poc-web
 
-# React Native for Web Starter
+Showcases how to write native-ready components in a web project, leveraging react-native-web.
 
-React Native for Web Starter aims at:
-- Providing the leanest code base to bootstrap a React Native for Web project.
-- Following the standard React Native project structure close so someone becoming familiar with React Native may quickly find its way in a RN4Web project, and vice-versa.
-- Benefit from the React community dev-tools, such as Storybook.
+## Installing
 
-## Presentation
-You can find a presentation of React Native for Web and this starter here.
-[![React Native for Web Starter](https://img.youtube.com/vi/eV4pZ6vv1VE/0.jpg)](https://www.youtube.com/watch?v=eV4pZ6vv1VE)
-
-## Getting *quickly* started
-
-As of today, React Native for Web, let's call it RN4Web, is still pretty recent, and could use some more documentations, along with contributions.
-
-This repo is an attempt to make it easier for anyone to launch, experiment and publish a RN4Web App.
-
-### Install
 ```
-git clone https://github.com/grabcode/react-native-web-starter.git projectname
-cd projectname
-rm -rf .git
-npm install
+git clone https://github.com/sdeleon28/rnw-poc-web
+cd rnw-poc-web
+yarn install
 ```
 
-### Run
-`npm run dev` - your app is accessible at `http://localhost:3000`
+## Running
 
-You can also enjoy [React Storybook](https://github.com/kadirahq/react-storybook) running `npm run storybook` and open `http://localhost:9001`
+```
+yarn run dev
+```
 
+Then fire up your browser at [https://localhost:3000](https://localhost:3000).
 
-### Build
-TODO
+## Details
 
-## Tools
+react-native-web works by providing abstract UI building blocks that are analogous to the ones used in React Native. It works with the same subset of CSS-in-JS that's available in React Native. 
 
-React Native for Web runs in the browser, hence get out of the box full dev tools supports.
+Creating a native-ready component is usually a matter of using `View`, `Text`, `TouchableOpacity`, etc, instead of `div`, `a`, etc.
 
-In the future, RN4Web Starter may come with some flavour such as Redux and its amazing [tool suite](https://github.com/gaearon/redux-devtools).
+The source for the demo component in this repo is at `src/components/DemoWidget` and looks like this:
 
-## About React Native for Web
+```
+import React, { Component, PropTypes as pt } from 'react';
+import {
+  StyleSheet,
+  Text,
+  View,
+  Image
+} from 'react-native';
+import { Touchable } from '../';
 
-[React Native for Web](https://github.com/necolas/react-native-web) is born from the brilliant mind of a member of the React Native community. Some would say it had to happen, many reasons begging for such project to get started.
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: '#F5FCFF'
+  },
+  logo: {
+    alignSelf: 'center',
+    marginBottom: 10
+  },
+  welcome: {
+    fontSize: 20,
+    textAlign: 'center',
+    margin: 10
+  },
+  instructions: {
+    textAlign: 'center',
+    color: '#333333',
+    marginBottom: 5
+  },
+  touchable: {
+    backgroundColor: '#CAE6FE'
+  }
+});
 
-React Native tends to unify iOS and Android, and soon Universal Windows developer under one banner, sort of the Wardens of the Native.
+const DemoWidget = ({ onPress }) => (
+  <View style={styles.container}>
+    <Image
+      source={require('../../assets/react-native-web.png')}
+      style={styles.logo}
+    />
+    <Touchable
+      onPress={onPress}
+      style={styles.touchable}>
+      <Text style={styles.welcome}>
+        Welcome to React Native for Web Starter!
+      </Text>
+      <Text style={styles.instructions}>
+        To get started, edit index.web.js
+      </Text>
+      <Text style={styles.instructions}>
+        Press Cmd+R to reload,{'\n'}
+        Alt+Cmd+I for dev menu
+      </Text>
+    </Touchable>
+  </View>
+);
 
-Well, following that GoT analogy, React Native for Web is the Wardens of the Web, unifying any React developer under a common set of values.
+DemoWidget.propTypes = {
+  onPress: pt.func.isRequired,
+};
 
-## License
-
-React Native for Web Starter is [BSD licensed](LICENSE).
+export default DemoWidget;
+```
